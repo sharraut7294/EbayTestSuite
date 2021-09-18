@@ -3,6 +3,7 @@
     <test name="Sanity">
         <classes>
             <class name="BaseScript"/>
+            <class name="CheckoutFailure"/>
         </classes>
     </test>
 </suite>
