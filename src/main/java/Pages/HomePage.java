@@ -18,11 +18,11 @@ public class HomePage {
     }
 
     public void enterProductNameInSearchBar(String productName){
-        searchInputBar.sendKeys(productName);
+        this.searchInputBar.sendKeys(productName);
     }
 
     public void clickOnSearchButton(){
-        searchButton.click();
+        this.searchButton.click();
     }
 
 

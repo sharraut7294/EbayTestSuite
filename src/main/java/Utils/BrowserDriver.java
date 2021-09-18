@@ -44,8 +44,8 @@ public class BrowserDriver {
        return  element;
     }
 
-    public void switchToFrame(String frameId) {
-        driver.switchTo().frame(frameId);
+    public static void switchToFrame(WebElement element) {
+        driver.switchTo().frame(element);
 
     }
 
