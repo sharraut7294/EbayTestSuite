@@ -5,7 +5,12 @@ import POJO.SiteAndBrowserDetails;
 import Pages.*;
 import Utils.BrowserControl;
 import Utils.BrowserDriver;
+import Utils.Helper;
 import Utils.JsonParser;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -50,7 +55,9 @@ public class CheckoutPageErrors {
         BrowserControl.closeBrowser();
     }
 
-    @Test
+    @Test (priority = 0, description="Verify shipping details failure reason when user clicks on Confirm & Pay button without entering any shipping details")
+    @Description("Test Description: Click on confirm & pay button on checkout page without entering any shipping details")
+    @Severity(SeverityLevel.NORMAL)
     public void verifyShippingDetailsFailure() throws IOException {
         CheckoutPage checkout = new CheckoutPage();
         checkout.clickOnConfirmAndPayBtn();
@@ -64,16 +71,19 @@ public class CheckoutPageErrors {
         Assert.assertEquals(checkout.getDisabledConfirmPayErrorMsg(), errors.enterShippingAddressError);
     }
 
-    @Test
+    @Test (priority = 1, description="Verify payment details failure reason when user enters dummy values for card number and security code fields")
+    @Description("Test Description: Enter dummy values in Card number and Security code fields in pay with card payment method and click on Done button")
+    @Severity(SeverityLevel.NORMAL)
     public void verifyCardNotSupportedFailure() throws IOException {
         CheckoutPage checkout = new CheckoutPage();
         JsonParser parser = new JsonParser();
+        Helper helper = new Helper();
 
         ShippingDetails shippingDetails = parser.readShippingDetailsFromJSON();
         CardDetails cardDetails = parser.readCardDetailsFromJSON();
         ErrorMessages errors = parser.readErrorMessagesFromJSON();
 
-        addShippingDetails(shippingDetails.firstName, shippingDetails.lastName, shippingDetails.streetAddress, shippingDetails.streetAddress2, shippingDetails.city, shippingDetails.state,shippingDetails.zipCode, shippingDetails.email, shippingDetails.phoneNumber);
+        helper.addShippingDetails(shippingDetails);
 
         try {
             Thread.sleep(10000);
@@ -83,36 +93,11 @@ public class CheckoutPageErrors {
 
         //To Do: Add implicit wait here
         checkout.selectAddNewCardOption();
-        addCardDetails(cardDetails.cardNumber,cardDetails.expirationDate,cardDetails.securityCode);
+        helper.addCardDetails(cardDetails);
 
         Assert.assertEquals(checkout.isEnterPaymentDetailsAgainErrorDisplayed(), true);
         Assert.assertEquals(checkout.getEnterPaymentDetailsAgainErrorText(),errors.enterPaymentDetailsAgainError);
         Assert.assertEquals(checkout.isCardNumberErrorDisplayed(), true);
         Assert.assertEquals(checkout.getCardNumberErrorText(), errors.cardNumberError);
-    }
-
-    //Pass json object with all details
-    public void addShippingDetails(String firstName,String lastName, String streetAddress,String streetAddress2,String city, String state,String zipCode, String email, String phoneNumber){
-        CheckoutPage checkout = new CheckoutPage();
-        //checkout.selectCountry(country);
-        checkout.enterFirstName(firstName);
-        checkout.enterLastName(lastName);
-        checkout.enterStreetAddress(streetAddress);
-        checkout.enterStreetAddress2(streetAddress2);
-        checkout.enterCity(city);
-        checkout.selectState(state);
-        checkout.enterZipCode(zipCode);
-        checkout.enterEmailId(email);
-        checkout.confirmEmailId(email);
-        checkout.enterPhoneNumber(phoneNumber);
-        checkout.submitAddressDetails();
-    }
-
-    public void addCardDetails(String cardNumber, String expirationDate, String securityCode){
-        CheckoutPage checkout = new CheckoutPage();
-        checkout.enterCardNumber(cardNumber);
-        checkout.enterCardExpiryDate(expirationDate);
-        checkout.enterSecurityCode(securityCode);
-        checkout.submitCardDetails();
     }
 }

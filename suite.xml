@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="SanitySuite" verbose="1" >
-    <test name="Sanity">
+<suite name="EbayTestSuite" verbose="1" >
+    <test name="ValidateCheckoutPageErrors">
         <classes>
             <!--<class name="BaseScript"/>-->
             <class name="CheckoutPageErrors"/>

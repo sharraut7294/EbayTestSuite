@@ -1,6 +1,7 @@
 package Pages;
 
 import Utils.BrowserDriver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -16,6 +17,7 @@ public class SearchResultsPage {
         PageFactory.initElements(BrowserDriver.getWebDriver(), this);
     }
 
+    @Step("User has selected first product from product list")
     public void selectFirstProduct(){
         this.firstProduct.click();
     }
