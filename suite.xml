@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="EbayTestSuite" verbose="1" >
-    <test name="ValidateCheckoutPageErrors">
+    <test name="ValidateCheckoutScenarios">
         <classes>
-            <!--<class name="BaseScript"/>-->
-            <class name="CheckoutPageErrors"/>
+            <class name="BaseScript"/>
+            <class name="CheckoutPageScripts"/>
         </classes>
     </test>
 </suite>

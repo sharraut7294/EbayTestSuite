@@ -18,16 +18,13 @@ import java.io.IOException;
 import java.lang.Thread;
 import java.util.concurrent.TimeUnit;
 
-public class CheckoutPageErrors {
+public class CheckoutPageScripts {
 
-    @BeforeMethod
-    public void launchBrowser() throws IOException {
+    @Test (priority = 0, description="User has added product in cart and navigated to check out page as a guest user")
+    @Description("Test Description: Search for a product, Select product, Add to Cart, Navigate to Checkout page")
+    public void addProductToCartAndGoToCheckout() throws IOException {
         JsonParser parser = new JsonParser();
         SiteAndBrowserDetails siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
-
-        BrowserControl.startBrowser(siteAndBrowserDetails.browserName);
-        BrowserControl.accessUrl(siteAndBrowserDetails.baseUrl);
-        BrowserControl.maximizeBrowser();
 
         HomePage home = new HomePage();
         SearchResultsPage results = new SearchResultsPage();
@@ -50,12 +47,8 @@ public class CheckoutPageErrors {
         }
     }
 
-    @AfterMethod
-    public void closeBrowser(){
-        BrowserControl.closeBrowser();
-    }
 
-    @Test (priority = 0, description="Verify shipping details failure reason when user clicks on Confirm & Pay button without entering any shipping details")
+    @Test (priority = 1, description="Verify shipping details failure reason when user clicks on Confirm & Pay button without entering any shipping details")
     @Description("Test Description: Click on confirm & pay button on checkout page without entering any shipping details")
     @Severity(SeverityLevel.NORMAL)
     public void verifyShippingDetailsFailure() throws IOException {
@@ -71,7 +64,7 @@ public class CheckoutPageErrors {
         Assert.assertEquals(checkout.getDisabledConfirmPayErrorMsg(), errors.enterShippingAddressError);
     }
 
-    @Test (priority = 1, description="Verify payment details failure reason when user enters dummy values for card number and security code fields")
+    @Test (priority = 2, description="Verify payment details failure reason when user enters dummy values for card number and security code fields")
     @Description("Test Description: Enter dummy values in Card number and Security code fields in pay with card payment method and click on Done button")
     @Severity(SeverityLevel.NORMAL)
     public void verifyCardNotSupportedFailure() throws IOException {
