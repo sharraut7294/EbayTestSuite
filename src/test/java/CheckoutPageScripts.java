@@ -11,6 +11,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -19,6 +20,8 @@ import java.lang.Thread;
 import java.util.concurrent.TimeUnit;
 
 public class CheckoutPageScripts {
+
+    Logger log = Logger.getLogger(CheckoutPageScripts.class);
 
     @Test (priority = 0, description="User has added product in cart and navigated to check out page as a guest user")
     @Description("Test Description: Search for a product, Select product, Add to Cart, Navigate to Checkout page")
@@ -36,14 +39,17 @@ public class CheckoutPageScripts {
         home.clickOnSearchButton();
 
         results.selectFirstProduct();
-
         productInfo.clickOnAddToCartButton();
+        log.info("Product has been added to cart");
 
         shoppingCart.clickOnGoToCheckoutButton();
         shoppingCart.clickOnContinueAsGuestButton();
+        log.info("User has navigated to checkout page as a guest user");
 
         if(captcha.isCaptchaPageDisplayed()){
+            log.info("Test case will fail as captcha can't get verified through automated software");
             captcha.verifyYouAreHuman();
+
         }
     }
 
@@ -54,6 +60,7 @@ public class CheckoutPageScripts {
     public void verifyShippingDetailsFailure() throws IOException {
         CheckoutPage checkout = new CheckoutPage();
         checkout.clickOnConfirmAndPayBtn();
+        log.info("User has directly clicked on Confirm & Pay button");
 
         JsonParser parser = new JsonParser();
         ErrorMessages errors = parser.readErrorMessagesFromJSON();
@@ -62,6 +69,7 @@ public class CheckoutPageScripts {
         Assert.assertEquals(checkout.getAddShippingDetailsWarningText(), errors.addShippingDetailsWarning);
         Assert.assertEquals(checkout.isDisabledConfirmPayErrorMsgDisplayed(),true);
         Assert.assertEquals(checkout.getDisabledConfirmPayErrorMsg(), errors.enterShippingAddressError);
+        log.info("User has verified errors related to shipping details");
     }
 
     @Test (priority = 2, description="Verify payment details failure reason when user enters dummy values for card number and security code fields")
@@ -84,13 +92,17 @@ public class CheckoutPageScripts {
             e.printStackTrace();
         }
 
-        //To Do: Add implicit wait here
+        //To Do: Add implicit wait here instead of Thread.sleep();
         checkout.selectAddNewCardOption();
+        log.info("User has selected Pay with card option");
+
         helper.addCardDetails(cardDetails);
+        log.info("User has added dummy card details");
 
         Assert.assertEquals(checkout.isEnterPaymentDetailsAgainErrorDisplayed(), true);
         Assert.assertEquals(checkout.getEnterPaymentDetailsAgainErrorText(),errors.enterPaymentDetailsAgainError);
         Assert.assertEquals(checkout.isCardNumberErrorDisplayed(), true);
         Assert.assertEquals(checkout.getCardNumberErrorText(), errors.cardNumberError);
+        log.info("User has verified errors related to card details");
     }
 }

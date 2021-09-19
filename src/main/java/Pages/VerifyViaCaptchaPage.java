@@ -1,6 +1,7 @@
 package Pages;
 
 import Utils.BrowserDriver;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,6 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyViaCaptchaPage {
+
+    Logger log = Logger.getLogger(VerifyViaCaptchaPage.class);
 
     @FindBy(xpath = "//div[@role='checkbox']")
     private WebElement captchaCheckBox;
@@ -26,7 +29,7 @@ public class VerifyViaCaptchaPage {
         try {
             return this.pleaseVerifyYourselfText.isDisplayed();
         } catch (Exception e) {
-            System.out.println("Verify captcha page not displayed");
+            log.info("Captcha page is not displayed");
             return false;
         }
     }
@@ -34,6 +37,7 @@ public class VerifyViaCaptchaPage {
     public void verifyYouAreHuman(){
         BrowserDriver.switchToFrame(captchaIframe);
         this.captchaCheckBox.click();
+        log.error("Selenium can click on captcha checkbox but can't select correct images");
     }
 
 

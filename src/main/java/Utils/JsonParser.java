@@ -4,6 +4,8 @@ import POJO.CardDetails;
 import POJO.ErrorMessages;
 import POJO.ShippingDetails;
 import POJO.SiteAndBrowserDetails;
+import Pages.VerifyViaCaptchaPage;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -13,6 +15,7 @@ import java.io.IOException;
 
 public class JsonParser {
 
+    Logger log = Logger.getLogger(JsonParser.class);
 
     public ShippingDetails readShippingDetailsFromJSON() throws IOException {
         JSONParser jsonParser = new JSONParser();
@@ -32,8 +35,10 @@ public class JsonParser {
             ship.email = (String)shippingDetails.get("email");
             ship.phoneNumber = (String)shippingDetails.get("phoneNumber");
 
+            log.info("Parsed all the fields for shipping details object");
 
         } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
+            log.error("Unable to parse ShippingDetails.json");
             e.printStackTrace();
         }
         return ship;
@@ -50,7 +55,10 @@ public class JsonParser {
             card.expirationDate = (String)cardDetails.get("expirationDate");
             card.securityCode = (String)cardDetails.get("securityCode");
 
+            log.info("Parsed all the fields for card details object");
+
         } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
+            log.error("Unable to parse CardDetails.json");
             e.printStackTrace();
         }
         return card;
@@ -69,7 +77,10 @@ public class JsonParser {
             errorMessages.enterPaymentDetailsAgainError = (String)error.get("enterPaymentDetailsAgainError");
             errorMessages.cardNumberError = (String)error.get("cardNumberError");
 
+            log.info("Parsed all the fields for Error Messages object");
+
         } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
+            log.error("Unable to parse ErrorMessages.json");
             e.printStackTrace();
         }
         return errorMessages;
@@ -87,7 +98,9 @@ public class JsonParser {
             siteAndBrowserDetails.baseUrl = (String)site.get("baseUrl");
             siteAndBrowserDetails.searchProductName = (String)site.get("searchProductName") ;
 
+            log.info("Parsed all the fields for siteAndBrowserDetails object");
         } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
+            log.error("Unable to parse SiteAndBrowserDetails.json");
             e.printStackTrace();
         }
         return siteAndBrowserDetails;
