@@ -2,7 +2,7 @@
 <suite name="SanitySuite" verbose="1" >
     <test name="Sanity">
         <classes>
-            <class name="BaseScript"/>
+            <!--<class name="BaseScript"/>-->
             <class name="CheckoutPageErrors"/>
         </classes>
     </test>

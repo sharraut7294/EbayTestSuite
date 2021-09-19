@@ -1,0 +1,6 @@
+{
+  "addShippingDetailsWarning": "Add your shipping details and click Done",
+  "enterShippingAddressError": "Enter shipping address",
+  "enterPaymentDetailsAgainError": "Looks like something wasn't correct. Please enter the payment details again.",
+  "cardNumberError": "We don't support this card. Please use a different one."
+}

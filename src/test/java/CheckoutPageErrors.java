@@ -1,17 +1,27 @@
+import POJO.CardDetails;
+import POJO.ErrorMessages;
+import POJO.ShippingDetails;
+import POJO.SiteAndBrowserDetails;
 import Pages.*;
 import Utils.BrowserControl;
 import Utils.BrowserDriver;
+import Utils.JsonParser;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.io.IOException;
 import java.lang.Thread;
 import java.util.concurrent.TimeUnit;
 
 public class CheckoutPageErrors {
 
     @BeforeMethod
-    public void launchBrowser(){
-        BrowserControl.startBrowser("chrome");
-        BrowserControl.accessUrl("https://www.ebay.com/");
+    public void launchBrowser() throws IOException {
+        JsonParser parser = new JsonParser();
+        SiteAndBrowserDetails siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
+
+        BrowserControl.startBrowser(siteAndBrowserDetails.browserName);
+        BrowserControl.accessUrl(siteAndBrowserDetails.baseUrl);
         BrowserControl.maximizeBrowser();
 
         HomePage home = new HomePage();
@@ -20,7 +30,7 @@ public class CheckoutPageErrors {
         ShoppingCartPage shoppingCart = new ShoppingCartPage();
         VerifyViaCaptchaPage captcha = new VerifyViaCaptchaPage();
 
-        home.enterProductNameInSearchBar("iphone 12 pro max");
+        home.enterProductNameInSearchBar(siteAndBrowserDetails.searchProductName);
         home.clickOnSearchButton();
 
         results.selectFirstProduct();
@@ -41,21 +51,29 @@ public class CheckoutPageErrors {
     }
 
     @Test
-    public void verifyShippingDetailsFailure()
-    {
+    public void verifyShippingDetailsFailure() throws IOException {
         CheckoutPage checkout = new CheckoutPage();
         checkout.clickOnConfirmAndPayBtn();
 
+        JsonParser parser = new JsonParser();
+        ErrorMessages errors = parser.readErrorMessagesFromJSON();
+
         Assert.assertEquals(checkout.isAddShippingDetailsWarningDisplayed(), true);
-        Assert.assertEquals(checkout.getAddShippingDetailsWarningText(), "Add your shipping details and click Done");
+        Assert.assertEquals(checkout.getAddShippingDetailsWarningText(), errors.addShippingDetailsWarning);
         Assert.assertEquals(checkout.isDisabledConfirmPayErrorMsgDisplayed(),true);
-        Assert.assertEquals(checkout.getDisabledConfirmPayErrorMsg(), "Enter shipping address");
+        Assert.assertEquals(checkout.getDisabledConfirmPayErrorMsg(), errors.enterShippingAddressError);
     }
 
     @Test
-    public void verifyCardNotSupportedFailure(){
+    public void verifyCardNotSupportedFailure() throws IOException {
         CheckoutPage checkout = new CheckoutPage();
-        addShippingDetails("Test", "Ebayuser", "3133 E Main St", "Mohegan Lake","New york","New York","10547","sharraut7294@gmail.com", "6465554087");
+        JsonParser parser = new JsonParser();
+
+        ShippingDetails shippingDetails = parser.readShippingDetailsFromJSON();
+        CardDetails cardDetails = parser.readCardDetailsFromJSON();
+        ErrorMessages errors = parser.readErrorMessagesFromJSON();
+
+        addShippingDetails(shippingDetails.firstName, shippingDetails.lastName, shippingDetails.streetAddress, shippingDetails.streetAddress2, shippingDetails.city, shippingDetails.state,shippingDetails.zipCode, shippingDetails.email, shippingDetails.phoneNumber);
 
         try {
             Thread.sleep(10000);
@@ -63,14 +81,14 @@ public class CheckoutPageErrors {
             e.printStackTrace();
         }
 
-        //Add implicit wait here
+        //To Do: Add implicit wait here
         checkout.selectAddNewCardOption();
-        addCardDetails("123456789","0119","1234");
+        addCardDetails(cardDetails.cardNumber,cardDetails.expirationDate,cardDetails.securityCode);
 
         Assert.assertEquals(checkout.isEnterPaymentDetailsAgainErrorDisplayed(), true);
-        Assert.assertEquals(checkout.getEnterPaymentDetailsAgainErrorText(),"Looks like something wasn't correct. Please enter the payment details again.");
+        Assert.assertEquals(checkout.getEnterPaymentDetailsAgainErrorText(),errors.enterPaymentDetailsAgainError);
         Assert.assertEquals(checkout.isCardNumberErrorDisplayed(), true);
-        Assert.assertEquals(checkout.getCardNumberErrorText(), "We don't support this card. Please use a different one.");
+        Assert.assertEquals(checkout.getCardNumberErrorText(), errors.cardNumberError);
     }
 
     //Pass json object with all details
