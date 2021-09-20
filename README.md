@@ -46,7 +46,7 @@ EbayTestSuite project for UI Automation of Ebay website - https://www.ebay.com/.
 - Once project is opened in IDE, you will see link like:
   ![image](https://user-images.githubusercontent.com/32537661/134026902-a998f121-8a49-4c1d-8d63-43bece8a81f5.png)
 
--  Click on *Load Maven Project*. This will auto download all depedencies added in pm.xml for your project.
+-  Click on *Load Maven Project*. This will auto download all depedencies added in pom.xml for your project.
 -  If you don't see above link *Right click on pom.xml file -> Maven -> Reload Project*
 -  Once all dependencies are downloaded to run the test suite follow either of the following two steps:
     - *In your test suite Right click on suite.xml -> Select run option*
