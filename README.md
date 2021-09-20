@@ -53,7 +53,8 @@ EbayTestSuite project for UI Automation of Ebay website - https://www.ebay.com/.
     - *Open Command prompt -> Go to the project folder path -> Run **mvn test** command*
 
 - Once all test cases are executed to generate allure report:
-    -  Install Allure Binary binary file from this [link](https://github.com/allure-framework/allure2/releases) into a local machine and unzip it to a particular location.***(Make sure version of allure binary downloaded and maven dependency version is same)
+    -  Install Allure Binary binary file from this [link](https://github.com/allure-framework/allure2/releases) into a local machine and unzip it to a particular location.
+       *(Make sure version of allure binary downloaded and maven dependency version is same)*
     -  Go to Windows Control Panel and Set environment variable & provide the path of this binary file till bin folder.
     -  For Validation type allure --version in command prompt to make sure that allure binary file is set up correctly.
     -  Now Execute your TestNg project again
