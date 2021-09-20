@@ -1,6 +1,6 @@
+import io.qameta.allure.internal.shadowed.jackson.annotation.JsonTypeInfo;
 import pojo.*;
 import pages.*;
-import utils.Helper;
 import utils.JsonParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -16,19 +16,34 @@ public class CheckoutPageScripts {
 
     Logger log = Logger.getLogger(CheckoutPageScripts.class);
 
+    JsonParser parser = new JsonParser();
+    SiteAndBrowserDetails siteAndBrowserDetails;
+    ShippingDetails shippingDetails;
+    CardDetails cardDetails;
+    ErrorMessages errors;
+    ProductDetails productDetails;
+
+    public CheckoutPageScripts() throws IOException {
+        parser = new JsonParser();
+        siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
+        shippingDetails = parser.readShippingDetailsFromJSON();
+        cardDetails = parser.readCardDetailsFromJSON();
+        errors = parser.readErrorMessagesFromJSON();
+        productDetails = parser.readProductDetailsFromJSON();
+    }
+
     @Test (priority = 0, description="User has added product in cart and navigated to check out page as a guest user")
     @Description("Test Description: Search for a product, Select product, Add to Cart, Navigate to Checkout page")
+    @Severity(SeverityLevel.CRITICAL)
     public void addProductToCartAndGoToCheckout() throws IOException {
-        JsonParser parser = new JsonParser();
-        SiteAndBrowserDetails siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
-
         HomePage home = new HomePage();
         SearchResultsPage results = new SearchResultsPage();
         ProductInfoPage productInfo = new ProductInfoPage();
         ShoppingCartPage shoppingCart = new ShoppingCartPage();
         VerifyViaCaptchaPage captcha = new VerifyViaCaptchaPage();
+        CheckoutPage checkoutPage = new CheckoutPage();
 
-        home.enterProductNameInSearchBar(siteAndBrowserDetails.searchProductName);
+        home.enterProductNameInSearchBar(productDetails.searchProductName);
         home.clickOnSearchButton();
 
         results.selectFirstProduct();
@@ -44,6 +59,7 @@ public class CheckoutPageScripts {
             captcha.verifyYouAreHuman();
 
         }
+        Assert.assertEquals(checkoutPage.isCheckoutHeadingDisplayed(),true);
     }
 
 
@@ -54,9 +70,6 @@ public class CheckoutPageScripts {
         CheckoutPage checkout = new CheckoutPage();
         checkout.clickOnConfirmAndPayBtn();
         log.info("User has directly clicked on Confirm & Pay button");
-
-        JsonParser parser = new JsonParser();
-        ErrorMessages errors = parser.readErrorMessagesFromJSON();
 
         Assert.assertEquals(checkout.isAddShippingDetailsWarningDisplayed(), true);
         Assert.assertEquals(checkout.getAddShippingDetailsWarningText(), errors.addShippingDetailsWarning);
@@ -70,14 +83,8 @@ public class CheckoutPageScripts {
     @Severity(SeverityLevel.NORMAL)
     public void verifyCardNotSupportedFailure() throws IOException {
         CheckoutPage checkout = new CheckoutPage();
-        JsonParser parser = new JsonParser();
-        Helper helper = new Helper();
 
-        ShippingDetails shippingDetails = parser.readShippingDetailsFromJSON();
-        CardDetails cardDetails = parser.readCardDetailsFromJSON();
-        ErrorMessages errors = parser.readErrorMessagesFromJSON();
-
-        helper.addShippingDetails(shippingDetails);
+        checkout.addShippingDetails(shippingDetails);
 
         log.info("Calling thread.sleep as implicit and explicit wait doesn't seem to work for above method");
         try {
@@ -89,7 +96,7 @@ public class CheckoutPageScripts {
         checkout.selectAddNewCardOption();
         log.info("User has selected Pay with card option");
 
-        helper.addCardDetails(cardDetails);
+        checkout.addCardDetails(cardDetails);
         log.info("User has added dummy card details");
 
         Assert.assertEquals(checkout.isEnterPaymentDetailsAgainErrorDisplayed(), true);

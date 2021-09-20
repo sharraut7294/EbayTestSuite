@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class BrowserDriver {
 
-    public static WebDriver driver;
+    private static WebDriver driver;
 
     public static WebDriver getWebDriver() {return  driver;}
 
@@ -25,21 +25,6 @@ public class BrowserDriver {
                 driver = new FirefoxDriver();
                 break;
         }
-    }
-
-    public WebElement getElement(String locType, String locValue) {
-       WebElement element = null;
-
-       switch (locType.toLowerCase()){
-           case "id":
-               element = driver.findElement(By.id(locValue));
-               break;
-
-           case "xpath":
-               element = driver.findElement(By.xpath(locValue));
-               break;
-       }
-       return  element;
     }
 
     public static void switchToFrame(WebElement element) {

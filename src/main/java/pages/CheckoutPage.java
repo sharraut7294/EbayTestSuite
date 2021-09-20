@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pojo.CardDetails;
+import pojo.ShippingDetails;
 import utils.BrowserDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
@@ -83,6 +85,9 @@ public class CheckoutPage {
 
     @FindBy(id = "country")
     private WebElement country;
+
+    @FindBy(xpath = "//h1[text()='Checkout']")
+    private WebElement checkoutHeading;
 
     public CheckoutPage(){
         PageFactory.initElements(BrowserDriver.getWebDriver(), this);
@@ -200,6 +205,33 @@ public class CheckoutPage {
         Select select = new Select(this.country);
         select.selectByVisibleText(countryName);
         BrowserDriver.getWebDriver().manage().timeouts().implicitlyWait(2, TimeUnit.MINUTES);
+    }
+
+    public boolean isCheckoutHeadingDisplayed(){
+        return this.checkoutHeading.isDisplayed();
+    }
+
+    @Step("User has added shipping details")
+    public void addShippingDetails(ShippingDetails shippingDetails){
+        this.enterFirstName(shippingDetails.firstName);
+        this.enterLastName(shippingDetails.lastName);
+        this.enterStreetAddress(shippingDetails.streetAddress);
+        this.enterStreetAddress2(shippingDetails.streetAddress2);
+        this.enterCity(shippingDetails.city);
+        this.selectState(shippingDetails.state);
+        this.enterZipCode(shippingDetails.zipCode);
+        this.enterEmailId(shippingDetails.email);
+        this.confirmEmailId(shippingDetails.email);
+        this.enterPhoneNumber(shippingDetails.phoneNumber);
+        this.submitAddressDetails();
+    }
+
+    @Step("User has added card details")
+    public void addCardDetails(CardDetails cardDetails){
+        this.enterCardNumber(cardDetails.cardNumber);
+        this.enterCardExpiryDate(cardDetails.expirationDate);
+        this.enterSecurityCode(cardDetails.securityCode);
+        this.submitCardDetails();
     }
 
 

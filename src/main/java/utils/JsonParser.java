@@ -1,9 +1,6 @@
 package utils;
 
-import pojo.CardDetails;
-import pojo.ErrorMessages;
-import pojo.ShippingDetails;
-import pojo.SiteAndBrowserDetails;
+import pojo.*;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,7 +17,7 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         ShippingDetails ship = new ShippingDetails();
         try {
-            FileReader reader = new FileReader("src/main/resources/testdata/ShippingDetails.json");
+            FileReader reader = new FileReader("src/test/resources/testdata/ShippingDetails.json");
             Object obj = jsonParser.parse(reader);
             JSONObject shippingDetails = (JSONObject) obj;
 
@@ -47,7 +44,7 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         CardDetails card = new CardDetails();
         try {
-            FileReader reader = new FileReader("src/main/resources/testdata/CardDetails.json");
+            FileReader reader = new FileReader("src/test/resources/testdata/CardDetails.json");
             Object obj = jsonParser.parse(reader);
             JSONObject cardDetails = (JSONObject) obj;
 
@@ -68,7 +65,7 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         ErrorMessages errorMessages = new ErrorMessages();
         try {
-            FileReader reader = new FileReader("src/main/resources/testdata/ErrorMessages.json");
+            FileReader reader = new FileReader("src/test/resources/testdata/ErrorMessages.json");
             Object obj = jsonParser.parse(reader);
             JSONObject error = (JSONObject) obj;
 
@@ -90,13 +87,12 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         SiteAndBrowserDetails siteAndBrowserDetails = new SiteAndBrowserDetails();
         try {
-            FileReader reader = new FileReader("src/main/resources/testdata/SiteAndBrowserDetails.json");
+            FileReader reader = new FileReader("src/test/resources/appconfig/SiteAndBrowserDetails.json");
             Object obj = jsonParser.parse(reader);
             JSONObject site = (JSONObject) obj;
 
             siteAndBrowserDetails.browserName = (String)site.get("browserName");
             siteAndBrowserDetails.baseUrl = (String)site.get("baseUrl");
-            siteAndBrowserDetails.searchProductName = (String)site.get("searchProductName") ;
 
             log.info("Parsed all the fields for siteAndBrowserDetails object");
         } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
@@ -104,5 +100,23 @@ public class JsonParser {
             e.printStackTrace();
         }
         return siteAndBrowserDetails;
+    }
+
+    public ProductDetails readProductDetailsFromJSON() throws IOException {
+        JSONParser jsonParser = new JSONParser();
+        ProductDetails productDetails = new ProductDetails();
+        try {
+            FileReader reader = new FileReader("src/test/resources/testdata/ProductDetails.json");
+            Object obj = jsonParser.parse(reader);
+            JSONObject product = (JSONObject) obj;
+
+            productDetails.searchProductName = (String)product.get("searchProductName");
+
+            log.info("Parsed all the fields for productDetails object");
+        } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
+            log.error("Unable to parse ProductDetails.json");
+            e.printStackTrace();
+        }
+        return productDetails;
     }
 }
