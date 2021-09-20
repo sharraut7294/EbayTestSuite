@@ -1,23 +1,16 @@
-import POJO.CardDetails;
-import POJO.ErrorMessages;
-import POJO.ShippingDetails;
-import POJO.SiteAndBrowserDetails;
-import Pages.*;
-import Utils.BrowserControl;
-import Utils.BrowserDriver;
-import Utils.Helper;
-import Utils.JsonParser;
+import pojo.*;
+import pages.*;
+import utils.Helper;
+import utils.JsonParser;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.lang.Thread;
-import java.util.concurrent.TimeUnit;
 
 public class CheckoutPageScripts {
 
@@ -86,13 +79,13 @@ public class CheckoutPageScripts {
 
         helper.addShippingDetails(shippingDetails);
 
+        log.info("Calling thread.sleep as implicit and explicit wait doesn't seem to work for above method");
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        //To Do: Add implicit wait here instead of Thread.sleep();
         checkout.selectAddNewCardOption();
         log.info("User has selected Pay with card option");
 

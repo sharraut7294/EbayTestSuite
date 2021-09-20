@@ -1,6 +1,10 @@
-package Pages;
+package pages;
 
-import Utils.BrowserDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.BrowserDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,6 +56,9 @@ public class CheckoutPage {
 
     @FindBy(xpath = "//button[@data-test-id='ADD_ADDRESS_SUBMIT']")
     private  WebElement shippingAddressSubmitBtn;
+
+    @FindBy(xpath = "//span[@id='payment-method-title']/h2[1]/span[1]/span[1]/span[1]")
+    private WebElement payWithHeading;
 
     @FindBy(id = "selectable-render-summary1")
     private WebElement addNewCardRadioBtn;
@@ -145,6 +152,12 @@ public class CheckoutPage {
 
     public void submitAddressDetails(){
         this.shippingAddressSubmitBtn.click();
+
+        //Both conditions not working as expected
+
+        //WebDriverWait wait = new WebDriverWait(BrowserDriver.getWebDriver(),20);
+        //wait.until(ExpectedConditions.elementToBeClickable(By.id("selectable-render-summary1")));
+        //wait.until(ExpectedConditions.elementSelectionStateToBe(this.addNewCardRadioBtn,false));
     }
 
     public void selectAddNewCardOption(){

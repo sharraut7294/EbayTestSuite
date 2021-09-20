@@ -1,10 +1,9 @@
-package Utils;
+package utils;
 
-import POJO.CardDetails;
-import POJO.ErrorMessages;
-import POJO.ShippingDetails;
-import POJO.SiteAndBrowserDetails;
-import Pages.VerifyViaCaptchaPage;
+import pojo.CardDetails;
+import pojo.ErrorMessages;
+import pojo.ShippingDetails;
+import pojo.SiteAndBrowserDetails;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,7 +20,7 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         ShippingDetails ship = new ShippingDetails();
         try {
-            FileReader reader = new FileReader("src/main/resources/TestData/ShippingDetails.json");
+            FileReader reader = new FileReader("src/main/resources/testdata/ShippingDetails.json");
             Object obj = jsonParser.parse(reader);
             JSONObject shippingDetails = (JSONObject) obj;
 
@@ -43,11 +42,12 @@ public class JsonParser {
         }
         return ship;
     }
+
     public CardDetails readCardDetailsFromJSON() throws IOException {
         JSONParser jsonParser = new JSONParser();
         CardDetails card = new CardDetails();
         try {
-            FileReader reader = new FileReader("src/main/resources/TestData/CardDetails.json");
+            FileReader reader = new FileReader("src/main/resources/testdata/CardDetails.json");
             Object obj = jsonParser.parse(reader);
             JSONObject cardDetails = (JSONObject) obj;
 
@@ -68,7 +68,7 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         ErrorMessages errorMessages = new ErrorMessages();
         try {
-            FileReader reader = new FileReader("src/main/resources/TestData/ErrorMessages.json");
+            FileReader reader = new FileReader("src/main/resources/testdata/ErrorMessages.json");
             Object obj = jsonParser.parse(reader);
             JSONObject error = (JSONObject) obj;
 
@@ -90,7 +90,7 @@ public class JsonParser {
         JSONParser jsonParser = new JSONParser();
         SiteAndBrowserDetails siteAndBrowserDetails = new SiteAndBrowserDetails();
         try {
-            FileReader reader = new FileReader("src/main/resources/TestData/SiteAndBrowserDetails.json");
+            FileReader reader = new FileReader("src/main/resources/testdata/SiteAndBrowserDetails.json");
             Object obj = jsonParser.parse(reader);
             JSONObject site = (JSONObject) obj;
 

@@ -1,8 +1,8 @@
-package Utils;
+package utils;
 
-import POJO.CardDetails;
-import POJO.ShippingDetails;
-import Pages.CheckoutPage;
+import pojo.CardDetails;
+import pojo.ShippingDetails;
+import pages.CheckoutPage;
 import io.qameta.allure.Step;
 
 public class Helper {

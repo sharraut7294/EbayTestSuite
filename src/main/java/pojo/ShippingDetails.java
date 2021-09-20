@@ -1,6 +1,4 @@
-package POJO;
-
-import java.security.PublicKey;
+package pojo;
 
 public class ShippingDetails {
     public String firstName;

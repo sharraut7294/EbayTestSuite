@@ -1,9 +1,8 @@
-import POJO.SiteAndBrowserDetails;
-import Utils.BrowserControl;
-import Utils.BrowserDriver;
-import Utils.JsonParser;
+import pojo.SiteAndBrowserDetails;
+import utils.BrowserControl;
 import org.apache.log4j.Logger;
 import org.testng.annotations.*;
+import utils.JsonParser;
 
 import java.io.IOException;
 
@@ -16,7 +15,6 @@ public class BaseScript {
     public void launchBrowser() throws IOException {
         JsonParser parser = new JsonParser();
         SiteAndBrowserDetails siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
-
         BrowserControl.startBrowser(siteAndBrowserDetails.browserName);
         log.info("Browser Started");
         BrowserControl.accessUrl(siteAndBrowserDetails.baseUrl);
