@@ -52,8 +52,8 @@ EbayTestSuite project for UI Automation of Ebay website - https://www.ebay.com/.
     - *In your test suite Right click on suite.xml -> Select run option*
     - *Open Command prompt -> Go to the project folder path -> Run **mvn test** command*
 
-- Once all test cases are executed to generate allure report:
-    -  Install Allure Binary binary file from this [link](https://github.com/allure-framework/allure2/releases) into a local machine and unzip it to a particular location.
+- Once all test cases are executed, follow below steps to generate allure report:
+    -  Install Allure Binary file from this [link](https://github.com/allure-framework/allure2/releases) into a local machine and unzip it to a particular location.
        *(Make sure version of allure binary downloaded and maven dependency version is same)*
     -  Go to Windows Control Panel and Set environment variable & provide the path of this binary file till bin folder.
     -  For Validation type allure --version in command prompt to make sure that allure binary file is set up correctly.
@@ -66,6 +66,8 @@ EbayTestSuite project for UI Automation of Ebay website - https://www.ebay.com/.
     - Once report is executed it will auto launched in your browser and should look like this:
       ![image](https://user-images.githubusercontent.com/32537661/134029845-a306def3-a32d-44fc-8491-2f21495cab7e.png)
 
+- For logging you don't have to run any specific command, logs will be auto-displayed on the console as your text execution completes. It should look like below:
+![img.png](img.png)
 
 # Useful resources:
 - [Selenium tutorial](https://www.seleniumeasy.com/selenium-webdriver-tutorials)
