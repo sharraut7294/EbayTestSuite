@@ -35,7 +35,7 @@ public class CheckoutPageScripts {
     @Test (priority = 0, description="User has added product in cart and navigated to check out page as a guest user")
     @Description("Test Description: Search for a product, Select product, Add to Cart, Navigate to Checkout page")
     @Severity(SeverityLevel.CRITICAL)
-    public void addProductToCartAndGoToCheckout() throws IOException {
+    public void addProductToCartAndGoToCheckout() {
         HomePage home = new HomePage();
         SearchResultsPage results = new SearchResultsPage();
         ProductInfoPage productInfo = new ProductInfoPage();
@@ -63,10 +63,10 @@ public class CheckoutPageScripts {
     }
 
 
-    @Test (priority = 1, description="Verify shipping details failure reason when user clicks on Confirm & Pay button without entering any shipping details")
+    @Test (priority = 1,description="Verify shipping details failure reason when user clicks on Confirm & Pay button without entering any shipping details")
     @Description("Test Description: Click on confirm & pay button on checkout page without entering any shipping details")
     @Severity(SeverityLevel.NORMAL)
-    public void verifyShippingDetailsFailure() throws IOException {
+    public void verifyShippingDetailsFailure() {
         CheckoutPage checkout = new CheckoutPage();
         checkout.clickOnConfirmAndPayBtn();
         log.info("User has directly clicked on Confirm & Pay button");
@@ -81,7 +81,7 @@ public class CheckoutPageScripts {
     @Test (priority = 2, description="Verify payment details failure reason when user enters dummy values for card number and security code fields")
     @Description("Test Description: Enter dummy values in Card number and Security code fields in pay with card payment method and click on Done button")
     @Severity(SeverityLevel.NORMAL)
-    public void verifyCardNotSupportedFailure() throws IOException {
+    public void verifyCardNotSupportedFailure() {
         CheckoutPage checkout = new CheckoutPage();
 
         checkout.addShippingDetails(shippingDetails);
