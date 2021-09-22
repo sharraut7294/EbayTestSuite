@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.io.IOException;
 import java.lang.Thread;
 
 public class CheckoutPageScripts {
@@ -23,7 +22,7 @@ public class CheckoutPageScripts {
     ErrorMessages errors;
     ProductDetails productDetails;
 
-    public CheckoutPageScripts() throws IOException {
+    public CheckoutPageScripts() {
         parser = new JsonParser();
         siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
         shippingDetails = parser.readShippingDetailsFromJSON();

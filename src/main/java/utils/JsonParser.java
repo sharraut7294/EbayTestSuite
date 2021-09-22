@@ -13,7 +13,7 @@ public class JsonParser {
 
     Logger log = Logger.getLogger(JsonParser.class);
 
-    public ShippingDetails readShippingDetailsFromJSON() throws IOException {
+    public ShippingDetails readShippingDetailsFromJSON(){
         JSONParser jsonParser = new JSONParser();
         ShippingDetails ship = new ShippingDetails();
         try {
@@ -37,10 +37,14 @@ public class JsonParser {
             log.error("Unable to parse ShippingDetails.json");
             e.printStackTrace();
         }
+        catch (IOException e){
+            log.error("Unable to read ShippingDetails.json");
+            e.printStackTrace();
+        }
         return ship;
     }
 
-    public CardDetails readCardDetailsFromJSON() throws IOException {
+    public CardDetails readCardDetailsFromJSON(){
         JSONParser jsonParser = new JSONParser();
         CardDetails card = new CardDetails();
         try {
@@ -58,10 +62,14 @@ public class JsonParser {
             log.error("Unable to parse CardDetails.json");
             e.printStackTrace();
         }
+        catch (IOException e){
+            log.error("Unable to read CardDetails.json");
+            e.printStackTrace();
+        }
         return card;
     }
 
-    public ErrorMessages readErrorMessagesFromJSON() throws IOException {
+    public ErrorMessages readErrorMessagesFromJSON(){
         JSONParser jsonParser = new JSONParser();
         ErrorMessages errorMessages = new ErrorMessages();
         try {
@@ -80,10 +88,14 @@ public class JsonParser {
             log.error("Unable to parse ErrorMessages.json");
             e.printStackTrace();
         }
+        catch (IOException e){
+            log.error("Unable to read ErrorMessages.json");
+            e.printStackTrace();
+        }
         return errorMessages;
     }
 
-    public SiteAndBrowserDetails readSiteBrowserDetailsFromJSON() throws IOException {
+    public SiteAndBrowserDetails readSiteBrowserDetailsFromJSON(){
         JSONParser jsonParser = new JSONParser();
         SiteAndBrowserDetails siteAndBrowserDetails = new SiteAndBrowserDetails();
         try {
@@ -99,10 +111,14 @@ public class JsonParser {
             log.error("Unable to parse SiteAndBrowserDetails.json");
             e.printStackTrace();
         }
+        catch (IOException e){
+            log.error("Unable to read SiteAndBrowserDetails.json");
+            e.printStackTrace();
+        }
         return siteAndBrowserDetails;
     }
 
-    public ProductDetails readProductDetailsFromJSON() throws IOException {
+    public ProductDetails readProductDetailsFromJSON() {
         JSONParser jsonParser = new JSONParser();
         ProductDetails productDetails = new ProductDetails();
         try {
@@ -115,6 +131,10 @@ public class JsonParser {
             log.info("Parsed all the fields for productDetails object");
         } catch (FileNotFoundException | org.json.simple.parser.ParseException e) {
             log.error("Unable to parse ProductDetails.json");
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            log.error("Unable to read ProductDetails.json");
             e.printStackTrace();
         }
         return productDetails;

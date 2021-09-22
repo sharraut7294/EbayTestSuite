@@ -4,15 +4,12 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.*;
 import utils.JsonParser;
 
-import java.io.IOException;
-
-
 public class BaseScript {
 
     Logger log = Logger.getLogger(BaseScript.class);
 
     @BeforeSuite
-    public void launchBrowser() throws IOException {
+    public void launchBrowser(){
         JsonParser parser = new JsonParser();
         SiteAndBrowserDetails siteAndBrowserDetails = parser.readSiteBrowserDetailsFromJSON();
         BrowserControl.startBrowser(siteAndBrowserDetails.browserName);
